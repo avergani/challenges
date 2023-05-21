@@ -3,7 +3,7 @@ package com.afvergani.ecommerce.service;
 
 import com.afvergani.ecommerce.model.Product;
 import com.afvergani.ecommerce.model.Size;
-import com.afvergani.ecommerce.model.Stock;
+import lombok.Setter;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
@@ -14,14 +14,25 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Setter
 @Service
 public class ReadFilesService implements IReadFilesService {
+
+
+    //@Value("${productFilePath:src/main/resources/products.csv}")
+    private String productFile = "src/main/resources/product.csv";
+
+    //@Value("${sizeFilePath:src/main/resources/size.csv}")
+    private  String sizeFile = "src/main/resources/size.csv";
+
+    //@Value("${stockFilePath:src/main/resources/stock.csv}")
+    private  String stockFile = "src/main/resources/stock.csv";
 
 
     @Override
     public List<Product> readProducts() {
         List<Product> products = new ArrayList<>();
-        try (BufferedReader reader = new BufferedReader(new FileReader("src/main/resources/product.csv"))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(productFile))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] attributes = line.split(",");
@@ -31,7 +42,6 @@ public class ReadFilesService implements IReadFilesService {
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
-
         }
         return products;
     }
@@ -39,7 +49,7 @@ public class ReadFilesService implements IReadFilesService {
         @Override
         public List<Size> readProductSize () {
             List<Size> sizes = new ArrayList<>();
-            try (BufferedReader reader = new BufferedReader(new FileReader("src/main/resources/size.csv"))) {
+            try (BufferedReader reader = new BufferedReader(new FileReader(sizeFile))) {
                 String line;
                 while ((line = reader.readLine()) != null) {
                     String[] attributes = line.split(",");
@@ -58,7 +68,7 @@ public class ReadFilesService implements IReadFilesService {
         @Override
         public Map<Integer,Integer> readStock () {
         Map<Integer,Integer> stockMap = new HashMap<>();
-        try (BufferedReader reader = new BufferedReader(new FileReader("src/main/resources/stock.csv"))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(stockFile))) {
             String line;
             while ((line = reader.readLine()) != null){
                 String[] attributes = line.split(",");

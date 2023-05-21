@@ -2,21 +2,28 @@ package com.afvergani.ecommerce.service;
 
 import com.afvergani.ecommerce.model.Product;
 import com.afvergani.ecommerce.model.Size;
-import com.afvergani.ecommerce.model.Stock;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
+
 
 @Service
 public class ProductsService implements IProductsService {
 
     IReadFilesService readFilesService = new ReadFilesService();
-    List<Integer> visibleProducts = new ArrayList<>();
-    List<Product> products = readFilesService.readProducts();
-    List<Size> sizes = readFilesService.readProductSize();
-    Map<Integer, Integer> stocks = readFilesService.readStock();
 
     public String getProductsAvailable() {
+
+
+        List<Product> products = readFilesService.readProducts();
+        List<Size> sizes = readFilesService.readProductSize();
+        Map<Integer, Integer> stocks = readFilesService.readStock();
+
+        List<Integer> visibleProducts = new ArrayList<>();
+        products.sort(Comparator.comparingInt(Product::getSequence));
 
         for (Product product : products) {
 
@@ -53,7 +60,6 @@ public class ProductsService implements IProductsService {
 
         }
         if (!visibleProducts.isEmpty()) {
-            Collections.sort(visibleProducts);
 
             System.out.println("Productos disponibles para la venta: " + visibleProducts);
             StringBuilder result = new StringBuilder();
