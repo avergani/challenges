@@ -10,7 +10,7 @@ public class H2Load {
 
 
     private final IProductService productService;
-
+    private final String filePath = "src/main/resources/initialData.csv";
     public H2Load(IProductService productService) {
         this.productService = productService;
     }
@@ -19,7 +19,7 @@ public class H2Load {
     @Bean
     public void loadPricesFromCSV() {
         try {
-            productService.loadPricesFromCSV();
+            productService.loadPricesFromCSV(filePath);
         } catch (Exception e) {
             e.printStackTrace();
         }

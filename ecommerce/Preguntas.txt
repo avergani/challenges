@@ -1,0 +1,23 @@
+Estructuras de datos utilizadas en el algoritmo
+Una vez realizado el problema del algoritmo de visibilidad, comenta qué estructuras de datos (Listas,
+Sets, etc) has seleccionado para resolverlo y porque las has considerado como las más adecuadas en
+cada caso.
+
+Respuesta:
+En la solución del desafío, se utilizaron las siguientes estructuras de datos:
+Listas: Se utilizaron listas para almacenar y manipular colecciones ordenadas de elementos.
+En este caso, se utilizaron listas para almacenar los productos, tallas y stocks. Las listas se eligieron porque mantienen el orden de inserción y permiten acceder a los elementos por índice, lo que es útil para realizar las verificaciones y búsquedas necesarias en el algoritmo.
+
+Mapas: Se utilizaron mapas para almacenar datos relacionados entre sí, específicamente para agrupar las tallas por ID de producto y los stocks por ID de talla.
+Los mapas proporcionan una estructura de clave-valor, lo que permite un acceso eficiente a los elementos utilizando una clave. En este caso, los mapas fueron útiles para realizar búsquedas rápidas y obtener los datos necesarios para las verificaciones de visibilidad.
+
+No se utilizaron Sets directamente en la solución del desafío. Sin embargo, es posible utilizar conjuntos para almacenar colecciones únicas de elementos sin duplicados. En este caso, si hubiera sido necesario mantener una lista de tallas únicas o IDs de productos únicos, se podría haber utilizado un conjunto para evitar duplicados y mejorar la eficiencia en algunas operaciones.
+  
+
+Complejidad temporal del algoritmo
+Una vez resuelto el algoritmo de visibilidad. ¿Qué complejidad temporal expresada en notación “O”
+crees que tiene? ¿Consideras que se podría mejorar de alguna manera?
+
+Respuesta:
+El bucle anidado actualmente tiene una complejidad de O(n^2), ya que recorre todos los tamaños para cada producto.
+Se puede mejorar utilizando una estructura de datos más eficiente para buscar los tamaños correspondientes a un producto determinado. Por ejemplo utilizar un Map<Integer, List<Size>> donde la clave sea el ID del producto y el valor sea una lista de tamaños asociados a ese producto.

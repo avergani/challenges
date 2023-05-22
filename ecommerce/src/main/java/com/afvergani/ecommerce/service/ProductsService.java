@@ -2,6 +2,10 @@ package com.afvergani.ecommerce.service;
 
 import com.afvergani.ecommerce.model.Product;
 import com.afvergani.ecommerce.model.Size;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -14,8 +18,9 @@ import java.util.Map;
 public class ProductsService implements IProductsService {
 
     IReadFilesService readFilesService = new ReadFilesService();
+    private static final Logger logger = LogManager.getLogger(ProductsService.class);
 
-    public String getProductsAvailable() {
+    public ResponseEntity<String> getProductsAvailable() {
 
 
         List<Product> products = readFilesService.readProducts();
@@ -24,7 +29,7 @@ public class ProductsService implements IProductsService {
 
         List<Integer> visibleProducts = new ArrayList<>();
         products.sort(Comparator.comparingInt(Product::getSequence));
-
+        logger.debug("Products: " + products);
         for (Product product : products) {
 
             boolean isSpecial = false;
@@ -49,7 +54,7 @@ public class ProductsService implements IProductsService {
                     }
                 }
             }
-            System.out.println("Producto: " + product.getId() + " isSpecial: " + isSpecial + " isBackSoon: " + isBackSoon + " isNonSpecialWithStock: " + isNonSpecialWithStock + " isSpecialWithStock: " + isSpecialWithStock);
+            logger.debug("Product: " + product.getId() + " isSpecial: " + isSpecial + " isBackSoon: " + isBackSoon + " isNonSpecialWithStock: " + isNonSpecialWithStock + " isSpecialWithStock: " + isSpecialWithStock);
             if (isSpecial && isSpecialWithStock && (isNonSpecialWithStock || isBackSoon)) {
                 visibleProducts.add(product.getId());
             }else{
@@ -61,7 +66,7 @@ public class ProductsService implements IProductsService {
         }
         if (!visibleProducts.isEmpty()) {
 
-            System.out.println("Productos disponibles para la venta: " + visibleProducts);
+            logger.info("Products available: " + visibleProducts);
             StringBuilder result = new StringBuilder();
             for (int i = 0; i < visibleProducts.size(); i++) {
                 result.append(visibleProducts.get(i));
@@ -69,10 +74,10 @@ public class ProductsService implements IProductsService {
                     result.append(",");
                 }
             }
-                return result.toString();
 
+            return new ResponseEntity<> (result.toString(), HttpStatus.OK);
         }
 
-        return "No existen productos diponibles para la venta";
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }
