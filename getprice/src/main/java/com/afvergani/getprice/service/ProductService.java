@@ -6,10 +6,7 @@ import com.afvergani.getprice.repository.IPriceRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -17,7 +14,8 @@ import java.util.Optional;
 
 @Service
 @AllArgsConstructor
-public class ProductService implements IProductService {
+public class
+ProductService implements IProductService {
 
     private final IPriceRepository priceRepository;
 
@@ -62,12 +60,13 @@ public class ProductService implements IProductService {
     @Override
     public void loadPricesFromCSV() throws IOException {
         try {
-            InputStream inputStream = getClass().getResourceAsStream("/src/main/resources/prices.csv");
-            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+            //InputStream inputStream = getClass().getResourceAsStream("/src/main/resources/prices.csv");
+            BufferedReader reader = new BufferedReader(new FileReader("src/main/resources/initialData.csv"));
 
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] data = line.split(",");
+                System.out.println(data[0]);
 
                 if(data.length == 8){
                     Product product = new Product();
