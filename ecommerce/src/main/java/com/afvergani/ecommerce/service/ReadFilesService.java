@@ -3,7 +3,6 @@ package com.afvergani.ecommerce.service;
 
 import com.afvergani.ecommerce.model.Product;
 import com.afvergani.ecommerce.model.Size;
-import lombok.Data;
 import lombok.Setter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
