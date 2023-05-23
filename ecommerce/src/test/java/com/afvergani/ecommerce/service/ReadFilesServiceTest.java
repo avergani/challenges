@@ -4,19 +4,17 @@ import com.afvergani.ecommerce.model.Product;
 import com.afvergani.ecommerce.model.Size;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import java.util.List;
 import java.util.Map;
 
-@RunWith(SpringRunner.class)
+
 @SpringBootTest
-@TestPropertySource(properties = {"productFiles=src/test/resources/product.csv", "sizeFiles=src/test/resources/size.csv", "stockFiles=src/test/resources/stock.csv"})
+@TestPropertySource(properties = {"product.FilePath=src/test/resources/product.csv", "size.FilePath=src/test/resources/size.csv", "stock.FilePath=src/test/resources/stock.csv"})
 public class ReadFilesServiceTest {
 
     @Autowired
@@ -53,7 +51,7 @@ public class ReadFilesServiceTest {
     @Test
     public void testReadProductsInvalidPath() {
 
-        ReflectionTestUtils.setField(filesService, "productFiles","src/test/resources/product1.csv");
+        ReflectionTestUtils.setField(filesService, "productFilePath","src/test/resources/product1.csv");
                 Assertions.assertThrows(RuntimeException.class, () -> {
                     readFilesService.readProducts();
                 });
@@ -62,7 +60,7 @@ public class ReadFilesServiceTest {
     @Test
     public void testReadProductSizeInvalidPath() {
 
-        ReflectionTestUtils.setField(filesService, "sizeFile","src/test/resources/size1.csv");
+        ReflectionTestUtils.setField(filesService, "sizeFilePath","src/test/resources/size1.csv");
         Assertions.assertThrows(RuntimeException.class, () -> {
             readFilesService.readProductSize();
         });
@@ -71,7 +69,7 @@ public class ReadFilesServiceTest {
     @Test
     public void testReadStockInvalidPath() {
 
-        ReflectionTestUtils.setField(filesService, "stockFile","src/test/resources/stock1.csv");
+        ReflectionTestUtils.setField(filesService, "stockFilePath","src/test/resources/stock1.csv");
         Assertions.assertThrows(RuntimeException.class, () -> {
             readFilesService.readStock();
         });

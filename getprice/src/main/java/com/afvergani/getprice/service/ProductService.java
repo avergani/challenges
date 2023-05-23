@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class ProductService implements IProductService {
 
-    private final IPriceRepository priceRepository;
+    private IPriceRepository priceRepository;
     private static final Logger logger = LogManager.getLogger(ProductService.class);
 
     @Override

@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @RestController
 public class PriceServiceController {
 
-    IProductService productService;
+    private IProductService productService;
     private static final Logger logger = LogManager.getLogger(PriceServiceController.class);
 
 
