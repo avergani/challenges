@@ -18,4 +18,21 @@ To deploy the Spring Boot project, follow these specific steps:
 
 9- Test the deployed application: Access the application using its designated URL or IP address and perform thorough testing to ensure that it functions correctly in the production environment. Test the endpoint and functionalities to verify that the deployed solution behaves as expected.
 
+H2 Data base configuration
+url=jdbc:h2:mem:price_db
+username=zara
+password=zara
+
+Accesible from web:
+<host>/h2-console
+
+From postman:
+<host>\getPrice
+<host>\productsAvailability
+
+From Swagger:
+<host>/ecommerce/swagger-ui.html
+
+<host>/getPrice/swagger-ui.html
+
 By following these detailed steps, you should be able to deploy the projects into a production environment.
