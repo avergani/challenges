@@ -17,8 +17,12 @@ import java.util.Map;
 @Service
 public class ProductsService implements IProductsService {
 
-    IReadFilesService readFilesService = new ReadFilesService();
+    IReadFilesService readFilesService;
     private static final Logger logger = LogManager.getLogger(ProductsService.class);
+
+    public ProductsService(IReadFilesService readFilesService) {
+        this.readFilesService = readFilesService;
+    }
 
     public ResponseEntity<String> getProductsAvailable() {
 

@@ -3,10 +3,10 @@ package com.afvergani.ecommerce.service;
 
 import com.afvergani.ecommerce.model.Product;
 import com.afvergani.ecommerce.model.Size;
-import lombok.Data;
 import lombok.Setter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
@@ -24,19 +24,21 @@ public class ReadFilesService implements IReadFilesService {
 
     private static final Logger logger = LogManager.getLogger(ReadFilesService.class);
 
-    private  String productFile = "src/main/resources/product.csv";
-    private  String sizeFile = "src/main/resources/size.csv";
-    private  String stockFile = "src/main/resources/stock.csv";
-
-
+    @Value("${product.FilePath}")
+    private String productFilePath;
+    @Value("${size.FilePath}")
+    private String sizeFilePath;
+    @Value("${stock.FilePath}")
+    private String stockFilePath;
 
     @Override
     public List<Product> readProducts() {
+
         logger.info("readProducts");
-        logger.debug("productFile: " + productFile);
+        logger.debug("productFile: " + productFilePath);
         List<Product> products = new ArrayList<>();
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(productFile))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(productFilePath))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] attributes = line.split(",");
@@ -54,9 +56,9 @@ public class ReadFilesService implements IReadFilesService {
         @Override
         public List<Size> readProductSize () {
         logger.info("readProductSize");
-        logger.debug("sizeFile: " + sizeFile);
+        logger.debug("sizeFile: " + sizeFilePath);
             List<Size> sizes = new ArrayList<>();
-            try (BufferedReader reader = new BufferedReader(new FileReader(sizeFile))) {
+            try (BufferedReader reader = new BufferedReader(new FileReader(sizeFilePath))) {
                 String line;
                 while ((line = reader.readLine()) != null) {
                     String[] attributes = line.split(",");
@@ -76,9 +78,9 @@ public class ReadFilesService implements IReadFilesService {
         @Override
         public Map<Integer,Integer> readStock () {
         logger.info("readStock");
-        logger.debug("stockFile: " + stockFile);
+        logger.debug("stockFile: " + stockFilePath);
         Map<Integer,Integer> stockMap = new HashMap<>();
-        try (BufferedReader reader = new BufferedReader(new FileReader(stockFile))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(stockFilePath))) {
             String line;
             while ((line = reader.readLine()) != null){
                 String[] attributes = line.split(",");
